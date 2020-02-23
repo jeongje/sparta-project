@@ -17,8 +17,31 @@ class Tenants(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
     delete_col = db.Column(db.Boolean, default=False)
 
+    contracts = db.relationship('Contracts', backref='tenants')
+
+
     def __repr__(self):
         return '<Tenants %r>' % str(self.id)
+
+
+class Contracts(db.Model):
+
+    __tablename__ = 'CONTRACTS'
+
+    id = db.Column(db.Integer, primary_key=True)
+    tenant_id = db.Column(db.Integer, db.ForeignKey('TENANTS.id'), nullable=False)
+    address = db.Column(db.String(30), nullable=False)
+    deposit = db.Column(db.Integer, nullable=False)
+    monthly = db.Column(db.Integer, nullable=False)
+    management_fee = db.Column(db.Integer, nullable=False)
+    start_date = db.Column(db.DateTime, nullable=False)
+    end_date = db.Column(db.DateTime, nullable=False)
+    contract_memo = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    delete_col = db.Column(db.Boolean, default=False)
+
+    def __repr__(self):
+        return '<Contracts %r>' % str(self.id)
 
 
 @app.route('/')
