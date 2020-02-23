@@ -25,6 +25,7 @@
         <th>이름</th>
         <th>핸드폰</th>
         <th>메모</th>
+        <th>del</th>
         <th>변경</th>
     </tr>
     {% for tenant in tenants %}
@@ -34,6 +35,7 @@
         <td>{{ tenant.name }}</td>
         <td>{{ tenant.phone }}</td>
         <td>{{ tenant.tenant_memo }}</td>
+        <td>{{ tenant.delete_col }}</td>
         <td>
             <a href="/tenants/delete/{{ tenant.id }}">삭제</a>
             <br>
