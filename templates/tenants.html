@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Tenants</title>
+{% endblock %}
+
+{% block body %}
+<h1>입주자 입력</h1>
+
+<form action="">
+    <p>이름: <input type="text" name="name" id="name"></p>
+    <p>핸드폰: <input type="text" name="phone" id="phone"></p>
+    <p>메모: <input type="text" name="tenant_memo" id="tenant_memo"></p>
+    <input type="submit" value="입력하기">
+</form>
+
+<hr>
+
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>이름</th>
+        <th>핸드폰</th>
+        <th>메모</th>
+    </tr>
+</table>
+
+{% endblock %}
