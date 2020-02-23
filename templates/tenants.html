@@ -5,9 +5,11 @@
 {% endblock %}
 
 {% block body %}
+<a href="/">Home</a>
+
 <h1>입주자 입력</h1>
 
-<form action="">
+<form action="/tenants" method="POST">
     <p>이름: <input type="text" name="name" id="name"></p>
     <p>핸드폰: <input type="text" name="phone" id="phone"></p>
     <p>메모: <input type="text" name="tenant_memo" id="tenant_memo"></p>
@@ -23,6 +25,14 @@
         <th>핸드폰</th>
         <th>메모</th>
     </tr>
+    {% for tenant in tenants %}
+    <tr>
+        <td>{{ tenant.id }}</td>
+        <td>{{ tenant.name }}</td>
+        <td>{{ tenant.phone }}</td>
+        <td>{{ tenant.tenant_memo }}</td>
+    </tr>
+    {% endfor %}
 </table>
 
 {% endblock %}

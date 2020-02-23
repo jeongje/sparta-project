@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -21,9 +21,24 @@ class Tenants(db.Model):
 def index():
     return render_template('index.html')
 
-@app.route('/tenants')
+@app.route('/tenants', methods=['GET', 'POST'])
 def tenants():
-    return render_template('tenants.html')
+    if request.method == 'POST':
+        tenant_name = request.form['name']
+        tenant_phone = request.form['phone']
+        tenant_memo = request.form['tenant_memo']
+        new_tenant = Tenants(name=tenant_name, phone=tenant_phone, tenant_memo=tenant_memo)
+        
+        try:
+            db.session.add(new_tenant)
+            db.session.commit()
+            return redirect('/tenants')
+        except:
+            return "new_tenant add error"
+    else:
+        tenants = Tenants.query.order_by(Tenants.created_at).all()
+        return render_template('tenants.html', tenants=tenants)
+
 
 
 if __name__ == "__main__":
