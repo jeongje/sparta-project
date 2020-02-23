@@ -29,7 +29,7 @@
         <th>변경</th>
     </tr>
     {% for tenant in tenants %}
-    {% if tenant.delete_col == False %}
+    <!--  if tenant.delete_col == False  -->
     <tr>
         <td>{{ tenant.id }}</td>
         <td>{{ tenant.created_at }}</td>
@@ -40,10 +40,10 @@
         <td>
             <a href="/tenants/delete/{{ tenant.id }}">삭제</a>
             <br>
-            <a href="">수정</a>
+            <a href="/tenants/edit/{{ tenant.id }}">수정</a>
         </td>
     </tr>
-    {% endif %}
+    <!--  endif  -->
     {% endfor %}
 </table>
 

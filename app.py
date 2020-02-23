@@ -57,8 +57,25 @@ def tenant_delete(id):
     return render_template('/tenants.html', tenants=tenants)
 
 
+@app.route('/tenants/edit/<int:id>', methods=['GET', 'POST'])
+def tenant_edit(id):
+    tenant = Tenants.query.get_or_404(id)
+    if request.method == 'POST':
+        tenant.name = request.form['name']
+        tenant.phone = request.form['phone']
+        tenant.tenant_memo = request.form['tenant_memo']
 
+        try:
+            db.session.commit()
+            return redirect('/tenants')
+        except:
+            return "tenant edit error"
+        
+    else:
+        return render_template('/edit.html', tenant=tenant)
+        
 
+   
 
 
 
