@@ -7,11 +7,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///rent.db'
 db = SQLAlchemy(app)
 
 class Tenants(db.Model):
+
+    __tablename__ = 'TENANTS'
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
     tenant_memo = db.Column(db.Text)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    delete_col = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return '<Tenants %r>' % str(self.id)
@@ -38,6 +42,20 @@ def tenants():
     else:
         tenants = Tenants.query.order_by(Tenants.created_at).all()
         return render_template('tenants.html', tenants=tenants)
+
+@app.route('/tenants/delete/<int:id>')
+def tenant_delete(id):
+    tenant = Tenants.query.get_or_404(id)
+
+    try:
+        db.session.delete(tenant)
+        db.session.commit()
+        return redirect('/tenants')
+    except:
+        return "tenant delete error"
+
+
+# @app.route('/tenants/edit')
 
 
 

@@ -21,16 +21,24 @@
 <table border="1">
     <tr>
         <th>id</th>
+        <th>생성일</th>
         <th>이름</th>
         <th>핸드폰</th>
         <th>메모</th>
+        <th>변경</th>
     </tr>
     {% for tenant in tenants %}
     <tr>
         <td>{{ tenant.id }}</td>
+        <td>{{ tenant.created_at }}</td>
         <td>{{ tenant.name }}</td>
         <td>{{ tenant.phone }}</td>
         <td>{{ tenant.tenant_memo }}</td>
+        <td>
+            <a href="/tenants/delete/{{ tenant.id }}">삭제</a>
+            <br>
+            <a href="">수정</a>
+        </td>
     </tr>
     {% endfor %}
 </table>
