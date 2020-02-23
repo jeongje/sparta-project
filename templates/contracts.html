@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Contracts</title>
+{% endblock %}
+
+{% block body %}
+<a href="/">Home</a>
+
+<h1>계약 입력</h1>
+
+
+<form action="/contracts" method="POST">
+    <p>입주자: <input type="text" name="tenant" id="tenant"></p>
+    <p>소재지: <input type="text" name="address" id="address"></p>
+    <p>보증금: <input type="text" name="deposit" id="deposit"></p>
+    <p>월세: <input type="text" name="monthly" id="monthly"></p>
+    <p>관리비: <input type="text" name="management_fee" id="management_fee"></p>
+    <p>계약시작일: <input type="date" name="start_date" id="start_date"></p>
+    <p>계약종료일: <input type="date" name="end_date" id="end_date"></p>
+    <p>메모: <input type="text" name="contract_memo" id="contract_memo"></p>
+    <input type="submit" value="입력하기">
+</form>
+
+<hr>
+
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>생성일</th>
+        <th>입주자</th>
+        <th>소재지</th>
+        <th>보증금</th>
+        <th>월세</th>
+        <th>관리비</th>
+        <th>계약시작일</th>
+        <th>계약종료일</th>
+        <th>메모</th>
+        <th>del</th>
+        <th>변경</th>
+    </tr>
+
+    <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+        <td>7</td>
+        <td>8</td>
+        <td>9</td>
+        <td>10</td>
+        <td>11</td>
+        <td>
+            <a href="">삭제</a>
+            <br>
+            <a href="">수정</a>
+        </td>
+    </tr>
+
+</table>
+
+{% endblock %}

@@ -48,6 +48,7 @@ class Contracts(db.Model):
 def index():
     return render_template('index.html')
 
+
 @app.route('/tenants', methods=['GET', 'POST'])
 def tenants():
     if request.method == 'POST':
@@ -95,12 +96,16 @@ def tenant_edit(id):
             return "tenant edit error"
         
     else:
-        return render_template('/edit.html', tenant=tenant)
+        return render_template('/tenant_edit.html', tenant=tenant)
         
 
-   
+@app.route('/contracts', methods=['GET', 'POST'])
+def contracts():
+    if request.method == 'POST':
+        pass
 
 
+    return render_template('/contracts.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
