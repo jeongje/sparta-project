@@ -43,22 +43,19 @@ def tenants():
         tenants = Tenants.query.order_by(Tenants.created_at).all()
         return render_template('tenants.html', tenants=tenants)
 
-@app.route('/tenants/delete/<int:id>', methods=['GET', 'POST'])
+@app.route('/tenants/delete/<int:id>', methods=['GET'])
 def tenant_delete(id):
     tenant = Tenants.query.get_or_404(id)
+    tenant.delete_col = True
 
-    if request.method == 'POST':
-        tenant.delete_col = True
+    try:
+        db.session.commit()
+    except:
+        return "tenant delete error"
+    
+    tenants = Tenants.query.order_by(Tenants.created_at).all()
+    return render_template('/tenants.html', tenants=tenants)
 
-        try:
-            db.session.commit()
-        except:
-            return "tenant delete error"
-
-        return redirect('/tenants')
-    else:
-        tenants = Tenants.query.order_by(Tenants.created_at).all()
-        return render_template('/tenants.html', tenants=tenants)
 
 
 
