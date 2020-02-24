@@ -98,7 +98,8 @@ def tenant_edit(id):
     else:
         return render_template('/tenant_edit.html', tenant=tenant)
         
-
+#html date input을 datetime으로 바꾸는
+#https://stackoverflow.com/questions/46468497/type-of-the-received-date-input-from-html-is-class-string
 @app.route('/contracts', methods=['GET', 'POST'])
 def contracts():
     if request.method == 'POST':
@@ -116,17 +117,16 @@ def contracts():
             deposit=contract_deposit,
             monthly=contract_monthly,
             management_fee=contract_management_fee,
-            # start_date=datetime(contract_start_date),
-            # end_date=datetie(contract_end_date),
+            start_date=datetime.strptime(contract_start_date, '%Y-%m-%d').date(), #db형태에 맞춰져 변환
+            end_date=datetime.strptime(contract_start_date, '%Y-%m-%d').date(), #db형태에 맞춰져 변환
             contract_memo=contract_contract_memo,
             )
-        print(contract_start_date)
-        # print(datetime(contract_start_date))
-        # try:
-        # db.session.add(new_contract)
-        # db.session.commit()
-        # except:
-            # return "new_contract add error"
+        try:
+            db.session.add(new_contract)
+            db.session.commit()
+            return redirect('/contracts')
+        except:
+            return "new_contract add error"
     else:
         contracts = Contracts.query.order_by(Contracts.created_at).all()
         return render_template('/contracts.html', contracts=contracts)
