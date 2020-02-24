@@ -116,15 +116,17 @@ def contracts():
             deposit=contract_deposit,
             monthly=contract_monthly,
             management_fee=contract_management_fee,
-            start_date=contract_start_date,
-            end_date=contract_end_date,
+            # start_date=datetime(contract_start_date),
+            # end_date=datetie(contract_end_date),
             contract_memo=contract_contract_memo,
             )
-        try:
-            db.session.add(new_contract)
-            db.session.commit()
-        except:
-            return "new_contract add error"
+        print(contract_start_date)
+        # print(datetime(contract_start_date))
+        # try:
+        # db.session.add(new_contract)
+        # db.session.commit()
+        # except:
+            # return "new_contract add error"
     else:
         contracts = Contracts.query.order_by(Contracts.created_at).all()
         return render_template('/contracts.html', contracts=contracts)
