@@ -102,10 +102,35 @@ def tenant_edit(id):
 @app.route('/contracts', methods=['GET', 'POST'])
 def contracts():
     if request.method == 'POST':
-        pass
+        contract_tenant_id = request.form['tenant_id']
+        contract_address = request.form['address']
+        contract_deposit = request.form['deposit']
+        contract_monthly = request.form['monthly']
+        contract_management_fee = request.form['management_fee']
+        contract_start_date = request.form['start_date']
+        contract_end_date = request.form['end_date']
+        contract_contract_memo = request.form['contract_memo']
+        new_contract = Contracts(
+            tenant_id=contract_tenant_id,
+            address=contract_address,
+            deposit=contract_deposit,
+            monthly=contract_monthly,
+            management_fee=contract_management_fee,
+            start_date=contract_start_date,
+            end_date=contract_end_date,
+            contract_memo=contract_contract_memo,
+            )
+        try:
+            db.session.add(new_contract)
+            db.session.commit()
+        except:
+            return "new_contract add error"
+    else:
+        contracts = Contracts.query.order_by(Contracts.created_at).all()
+        return render_template('/contracts.html', contracts=contracts)
 
 
-    return render_template('/contracts.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
