@@ -28,7 +28,7 @@
     <tr>
         <th>id</th>
         <th>생성일</th>
-        <th>입주자id</th>
+        <th>입주자</th>
         <th>소재지</th>
         <th>보증금</th>
         <th>월세</th>
@@ -39,11 +39,13 @@
         <th>del</th>
         <th>변경</th>
     </tr>
-    {% for contract in contracts %}
+    {% for contract_tenant in contracts_tenants %}
+    {% set contract = contract_tenant[0] %}
+    {% set tenant = contract_tenant[1] %}
     <tr>
         <td>{{ contract.id }}</td>
         <td>{{ contract.created_at }}</td>
-        <td>{{ contract.tenant_id }}</td>
+        <td>{{ tenant.name }}</td>
         <td>{{ contract.address }}</td>
         <td>{{ contract.deposit }}</td>
         <td>{{ contract.monthly }}</td>
@@ -58,10 +60,11 @@
             <a href="">수정</a>
         </td>
     </tr>
+
+
     {% endfor %}
 
 
-    
 </table>
 
 {% endblock %}

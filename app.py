@@ -118,7 +118,7 @@ def contracts():
             monthly=contract_monthly,
             management_fee=contract_management_fee,
             start_date=datetime.strptime(contract_start_date, '%Y-%m-%d').date(), #db형태에 맞춰져 변환
-            end_date=datetime.strptime(contract_start_date, '%Y-%m-%d').date(), #db형태에 맞춰져 변환
+            end_date=datetime.strptime(contract_end_date, '%Y-%m-%d').date(), #db형태에 맞춰져 변환
             contract_memo=contract_contract_memo,
             )
         try:
@@ -128,10 +128,11 @@ def contracts():
         except:
             return "new_contract add error"
     else:
-        contracts = Contracts.query.order_by(Contracts.created_at).all()
-        return render_template('/contracts.html', contracts=contracts)
-
-
+        # Contracts테이블과 Tenants테이블 join후 묶어서 넘기기
+        contracts_tenants = db.session.query(
+            Contracts, Tenants           
+            ).outerjoin(Tenants, Contracts.tenant_id == Tenants.id).all()
+        return render_template('/contracts.html', contracts_tenants=contracts_tenants)
 
 
 if __name__ == "__main__":
