@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -133,6 +133,16 @@ def contracts():
             Contracts, Tenants           
             ).outerjoin(Tenants, Contracts.tenant_id == Tenants.id).all()
         return render_template('/contracts.html', contracts_tenants=contracts_tenants)
+
+
+@app.route('/tenants/name_list', methods=['GET'])
+def name_list():
+    name_list = []
+    tenants = Tenants.query.all()
+    for tenant in tenants:
+        name_list.append(tenant.name)
+    
+    return jsonify({'result':'success', 'name_list':name_list})
 
 
 if __name__ == "__main__":
