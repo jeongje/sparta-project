@@ -133,7 +133,7 @@ def contracts():
             return redirect('/contracts')
         except:
             return "new_contract add error"
-    else:
+    else:        
         # Contracts테이블과 Tenants테이블 join후 묶어서 넘기기
         contracts_tenants = db.session.query(
             Contracts, Tenants           
