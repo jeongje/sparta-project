@@ -105,7 +105,11 @@ def tenant_edit(id):
 @app.route('/contracts', methods=['GET', 'POST'])
 def contracts():
     if request.method == 'POST':
-        contract_tenant_id = request.form['tenant_id']
+        #이름을 받아서 tenant_id로 변경 > 동명이인 처리 안됨
+        tenant_name = request.form['tenant_name']
+        tenant_id = Tenants.query.filter(Tenants.name==tenant_name).first().id
+        #Contracts 테이블에 넣기
+        contract_tenant_id = tenant_id
         contract_address = request.form['address']
         contract_deposit = request.form['deposit']
         contract_monthly = request.form['monthly']

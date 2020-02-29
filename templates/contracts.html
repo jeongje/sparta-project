@@ -10,10 +10,6 @@
 <h1>계약 입력</h1>
 
 <form action="/contracts" method="POST">
-    <!-- <div class="form-group">
-        <label for="tenant_id">입주자ID</label>
-        <input type="text" class="form-control" name="tenant_id" id="tenant_id" placeholder="">
-    </div> -->
     <div class="form-group">
         <label for="tenant_name">입주자</label>
         <select class="form-control" name="tenant_name" id="tenant_name" placeholder="">
@@ -67,6 +63,7 @@
         <th>메모</th>
         <th>del</th>
         <th>변경</th>
+        <th>t_id</th>
     </tr>
     {% for contract_tenant in contracts_tenants %}
     {% set contract = contract_tenant[0] %}
@@ -88,6 +85,7 @@
             <br>
             <a href="">수정</a>
         </td>
+        <td>{{ contract.tenant_id}}</td>
     </tr>
     {% endfor %}
 
