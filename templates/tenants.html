@@ -10,9 +10,18 @@
 <h1>입주자 입력</h1>
 
 <form action="/tenants" method="POST">
-    <p>이름: <input type="text" name="name" id="name"></p>
-    <p>핸드폰: <input type="text" name="phone" id="phone"></p>
-    <p>메모: <input type="text" name="tenant_memo" id="tenant_memo"></p>
+    <div class="form-group">
+        <label for="name">이름</label>
+        <input type="text" class="form-control" name="name" id="name" placeholder="">
+    </div>
+    <div class="form-group">
+        <label for="phone">핸드폰</label>
+        <input type="text" class="form-control" name="phone" id="phone" placeholder="">
+    </div>
+    <div class="form-group">
+        <label for="tenant_memo">메모</label>
+        <textarea class="form-control" name="tenant_memo" id="tenant_memo" rows="3"></textarea>
+    </div>
     <input type="submit" value="입력하기">
 </form>
 

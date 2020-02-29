@@ -9,10 +9,20 @@
 <h1>Edit</h1>
 
 <form action="/tenants/edit/{{ tenant.id }}" method="POST">
-    <p>이름: <input type="text" name="name" id="name" value="{{ tenant.name }}"></p>
-    <p>핸드폰: <input type="text" name="phone" id="phone" value="{{ tenant.phone }}"></p>
-    <p>메모: <input type="text" name="tenant_memo" id="tenant_memo" value="{{ tenant.tenant_memo }}"></p>
+    <div class="form-group">
+        <label for="name">이름</label>
+        <input type="text" class="form-control" name="name" id="name" value="{{ tenant.name }}" placeholder="">
+    </div>
+    <div class="form-group">
+        <label for="phone">핸드폰</label>
+        <input type="text" class="form-control" name="phone" id="phone" value="{{ tenant.phone }}" placeholder="">
+    </div>
+    <div class="form-group">
+        <label for="tenant_memo">메모</label>
+        <textarea class="form-control" name="tenant_memo" id="tenant_memo" rows="3">{{ tenant.tenant_memo }}</textarea>
+    </div>
     <input type="submit" value="수정하기">
 </form>
+
 
 {% endblock %}
