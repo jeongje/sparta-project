@@ -143,22 +143,7 @@ def name_list():
     tenants = Tenants.query.all()
     for tenant in tenants:
         name_list.append(tenant.name)
-    print(name_list[0])
-    print(type(name_list))
-    jsonStr = json.dumps(name_list)
-    print(jsonStr)
-    print(type(jsonStr))
     return jsonify({'result':'success', 'name_list':name_list})
-    # return jsonify(list(name_list))
-
-
-    # response = app.response_class(
-    # response=json.dumps(name_list),
-    # status=200,
-    # mimetype='application/json'
-    # )
-    # return response
-
 
 
 
