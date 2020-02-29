@@ -5,51 +5,69 @@
 {% endblock %}
 
 {% block body %}
-<a href="/">Home</a>
-
-<h1>계약 입력</h1>
-
-<form action="/contracts" method="POST">
-    <div class="form-group">
-        <label for="tenant_name">입주자</label>
-        <select class="form-control" name="tenant_name" id="tenant_name" placeholder="">
-            <option hidden disabled selected value></option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="address">소재지</label>
-        <input type="text" class="form-control" name="address" id="address" placeholder="">
-    </div>
-    <div class="form-group">
-        <label for="deposit">보증금</label>
-        <input type="text" class="form-control" name="deposit" id="deposit" placeholder="">
-    </div>
-    <div class="form-group">
-        <label for="monthly">월세</label>
-        <input type="text" class="form-control" name="monthly" id="monthly" placeholder="">
-    </div>
-    <div class="form-group">
-        <label for="management_fee">관리비</label>
-        <input type="text" class="form-control" name="management_fee" id="management_fee" placeholder="">
-    </div>
-    <div class="form-group">
-        <label for="start_date">계약시작일</label>
-        <input type="date" class="form-control" name="start_date" id="start_date" placeholder="">
-    </div>
-    <div class="form-group">
-        <label for="end_date">계약종료일</label>
-        <input type="date" class="form-control" name="end_date" id="end_date" placeholder="">
-    </div>
-    <div class="form-group">
-        <label for="contract_memo">메모</label>
-        <textarea class="form-control" name="contract_memo" id="contract_memo" rows="3"></textarea>
-    </div>
-    <input type="submit" value="입력하기">
-</form>
-
+<div class="text-center">
+    <h1>계약 입력</h1>
+</div>
+<div class="container">
+    <form class="" action="/contracts" method="POST">
+        <div class="form-group row">
+            <label for="tenant_name" class="col-sm-2 col-form-label">입주자</label>
+            <div class="col-sm-2">
+                <select class="form-control" name="tenant_name" id="tenant_name" placeholder="">
+                    <option hidden disabled selected value></option>
+                </select>
+            </div>
+            <!-- </div>
+    <div class="form-group"> -->
+            <label for="address" class="col-sm-2 col-form-label">소재지</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" name="address" id="address" placeholder="">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="deposit" class="col-sm-2 col-form-label">보증금</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" name="deposit" id="deposit" placeholder="">
+            </div>
+            <!-- </div>
+    <div class="form-group"> -->
+            <label for="monthly" class="col-sm-2 col-form-label">월세</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" name="monthly" id="monthly" placeholder="">
+            </div>
+            <!-- </div>
+    <div class="form-group"> -->
+            <label for="management_fee" class="col-sm-2 col-form-label">관리비</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" name="management_fee" id="management_fee" placeholder="">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="start_date" class="col-sm-2 col-form-label">계약시작일</label>
+            <div class="col-sm-2">
+                <input type="date" class="form-control" name="start_date" id="start_date" placeholder="">
+            </div>
+            <!-- </div>
+    <div class="form-group"> -->
+            <label for="end_date" class="col-sm-2 col-form-label">계약종료일</label>
+            <div class="col-sm-2">
+                <input type="date" class="form-control" name="end_date" id="end_date" placeholder="">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="contract_memo" class="col-sm-2 col-form-label">메모</label>
+            <div class="col-sm-2">
+                <textarea class="form-control" name="contract_memo" id="contract_memo" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="text-center">
+            <input type="submit" value="입력하기">
+        </div>
+    </form>
+</div>
 <hr>
 
-<table border="1">
+<table class="contract-table center" border="1">
     <tr>
         <th>id</th>
         <th>생성일</th>

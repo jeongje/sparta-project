@@ -1,10 +1,14 @@
 body {
     font-family: Helvetica;
-    margin-top: 50px;
-    margin-left: 50px;
-    margin-bottom: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.form-group {
-    max-width: 500px;
+
+.nav-pills {
+    margin-bottom: 20px
+}
+
+.center {
+    margin: auto;
 }
