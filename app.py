@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect, jsonify, json
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///rent.db'
+# https://stackoverflow.com/questions/14853694/python-jsonify-dictionary-in-utf-8
+app.config['JSON_AS_ASCII'] = False #jsonify에서 한글이 안넘어갈 때 처리
 db = SQLAlchemy(app)
 
 class Tenants(db.Model):
@@ -141,8 +143,23 @@ def name_list():
     tenants = Tenants.query.all()
     for tenant in tenants:
         name_list.append(tenant.name)
-    
+    print(name_list[0])
+    print(type(name_list))
+    jsonStr = json.dumps(name_list)
+    print(jsonStr)
+    print(type(jsonStr))
     return jsonify({'result':'success', 'name_list':name_list})
+    # return jsonify(list(name_list))
+
+
+    # response = app.response_class(
+    # response=json.dumps(name_list),
+    # status=200,
+    # mimetype='application/json'
+    # )
+    # return response
+
+
 
 
 if __name__ == "__main__":
