@@ -6,7 +6,7 @@
 
 {% block body %}
 <div class="text-center">
-    <h1>계약 입력</h1>
+    <h3>계약 입력</h3>
 </div>
 <div class="container">
     <form class="" action="/contracts" method="POST">
@@ -53,33 +53,32 @@
             </div>
         </div>
         <div class="text-center">
-            <input type="submit" value="입력하기">
+            <input class="btn btn-secondary" type="submit" value="입력하기">
         </div>
     </form>
 </div>
-<hr>
 
-<table class="contract-table center" border="1">
+<table class=table>
     <tr>
-        <th>id</th>
-        <th>생성일</th>
-        <th>입주자</th>
-        <th>소재지</th>
-        <th>보증금</th>
-        <th>월세</th>
-        <th>관리비</th>
-        <th>계약시작일</th>
-        <th>계약종료일</th>
-        <th>메모</th>
-        <th>del</th>
-        <th>변경</th>
-        <th>t_id</th>
+        <th scope="col">id</th>
+        <th scope="col">생성일</th>
+        <th scope="col">입주자</th>
+        <th scope="col">소재지</th>
+        <th scope="col">보증금</th>
+        <th scope="col">월세</th>
+        <th scope="col">관리비</th>
+        <th scope="col">계약시작일</th>
+        <th scope="col">계약종료일</th>
+        <th scope="col">메모</th>
+        <th scope="col">del</th>
+        <th scope="col">t_id</th>
+        <th scope="col">변경</th>
     </tr>
     {% for contract_tenant in contracts_tenants %}
     {% set contract = contract_tenant[0] %}
     {% set tenant = contract_tenant[1] %}
     <tr>
-        <td>{{ contract.id }}</td>
+        <th scope="row">{{ contract.id }}</th>
         <td>{{ contract.created_at }}</td>
         <td>{{ tenant.name }}</td>
         <td>{{ contract.address }}</td>
@@ -90,12 +89,11 @@
         <td>{{ contract.end_date }}</td>
         <td>{{ contract.contract_memo }}</td>
         <td>{{ contract.delete_col}}</td>
-        <td>
-            <a href="">삭제</a>
-            <br>
-            <a href="">수정</a>
-        </td>
         <td>{{ contract.tenant_id}}</td>
+        <td>
+            <a class="btn btn-primary btn-sm" href="" role="button">삭제</a>
+            <a class="btn btn-primary btn-sm" href="" role="button">수정</a>
+        </td>
     </tr>
     {% endfor %}
 
