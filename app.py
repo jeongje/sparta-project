@@ -13,7 +13,7 @@ class Tenants(db.Model):
     __tablename__ = 'TENANTS'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), nullable=False)
+    name = db.Column(db.String(20), nullable=False, unique=True)
     phone = db.Column(db.String(20), nullable=False)
     tenant_memo = db.Column(db.Text)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
