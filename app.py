@@ -6,6 +6,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///rent.db'
 # https://stackoverflow.com/questions/14853694/python-jsonify-dictionary-in-utf-8
 app.config['JSON_AS_ASCII'] = False #jsonify에서 한글이 안넘어갈 때 처리
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class Tenants(db.Model):
