@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, jsonify, json
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///rent.db'
@@ -17,7 +17,9 @@ class Tenants(db.Model):
     name = db.Column(db.String(20), nullable=False, unique=True)
     phone = db.Column(db.String(20), nullable=False)
     tenant_memo = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    # 시간이 동일하게 출력되는 문제가 있었다. 이건 db에서 default지정의 의미를 이해 못해서 생긴 문제
+    # db에서 default는 db가 호출되는 시간. 따라서 그 시간이 계속 저장된 새로 post요청 보낼 때 다시 시간을 입력해줘야 함
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow()+timedelta(hours=9))
     delete_col = db.Column(db.Boolean, default=False)
 
     contracts = db.relationship('Contracts', backref='tenants')
@@ -40,7 +42,7 @@ class Contracts(db.Model):
     start_date = db.Column(db.DateTime, nullable=False)
     end_date = db.Column(db.DateTime, nullable=False)
     contract_memo = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now()+timedelta(hours=9))
     delete_col = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
@@ -63,7 +65,7 @@ def tenants():
         tenant_name = request.form['name']
         tenant_phone = request.form['phone']
         tenant_memo = request.form['tenant_memo']
-        tenant_created_at = datetime.now()
+        tenant_created_at = datetime.now()+timedelta(hours=9)
         new_tenant = Tenants(name=tenant_name, phone=tenant_phone, tenant_memo=tenant_memo, created_at=tenant_created_at)
         
         try:
@@ -124,7 +126,7 @@ def contracts():
         contract_start_date = request.form['start_date']
         contract_end_date = request.form['end_date']
         contract_contract_memo = request.form['contract_memo']
-        contract_created_at = datetime.now()
+        contract_created_at = datetime.now()+timedelta(hours=9)
 
         new_contract = Contracts(
             tenant_id=contract_tenant_id,
