@@ -4,9 +4,13 @@ body {
     margin-bottom: 20px;
 }
 
-
 .nav-pills {
     margin-bottom: 20px
+}
+
+.required .control-label:after {
+    content: "*";
+    color: red;
 }
 
 .center {
