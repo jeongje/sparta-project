@@ -10,7 +10,7 @@ db = SQLAlchemy(app)
 
 class Tenants(db.Model):
 
-    __tablename__ = 'TENANTS'
+    __tablename__ = 'tenants'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False, unique=True)
@@ -28,10 +28,10 @@ class Tenants(db.Model):
 
 class Contracts(db.Model):
 
-    __tablename__ = 'CONTRACTS'
+    __tablename__ = 'contracts'
 
     id = db.Column(db.Integer, primary_key=True)
-    tenant_id = db.Column(db.Integer, db.ForeignKey('TENANTS.id'), nullable=False)
+    tenant_id = db.Column(db.Integer, db.ForeignKey('tenants.id'), nullable=False)
     address = db.Column(db.String(30), nullable=False)
     deposit = db.Column(db.Integer, nullable=False)
     monthly = db.Column(db.Integer, nullable=False)
@@ -44,6 +44,11 @@ class Contracts(db.Model):
 
     def __repr__(self):
         return '<Contracts %r>' % str(self.id)
+
+
+# class DepositHistory(db.Model):
+
+#     __tablename__ = 'deposit_history'
 
 
 @app.route('/')
