@@ -62,7 +62,8 @@ def tenants():
         tenant_name = request.form['name']
         tenant_phone = request.form['phone']
         tenant_memo = request.form['tenant_memo']
-        new_tenant = Tenants(name=tenant_name, phone=tenant_phone, tenant_memo=tenant_memo)
+        tenant_created_at = datetime.now()
+        new_tenant = Tenants(name=tenant_name, phone=tenant_phone, tenant_memo=tenant_memo, created_at=tenant_created_at)
         
         try:
             db.session.add(new_tenant)
@@ -122,6 +123,8 @@ def contracts():
         contract_start_date = request.form['start_date']
         contract_end_date = request.form['end_date']
         contract_contract_memo = request.form['contract_memo']
+        contract_created_at = datetime.now()
+
         new_contract = Contracts(
             tenant_id=contract_tenant_id,
             address=contract_address,
@@ -131,6 +134,7 @@ def contracts():
             start_date=datetime.strptime(contract_start_date, '%Y-%m-%d').date(), #db형태에 맞춰져 변환
             end_date=datetime.strptime(contract_end_date, '%Y-%m-%d').date(), #db형태에 맞춰져 변환
             contract_memo=contract_contract_memo,
+            created_at=contract_created_at,
             )
         try:
             db.session.add(new_contract)
