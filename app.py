@@ -169,7 +169,7 @@ def contracts():
         # Contracts테이블과 Tenants테이블 join후 묶어서 넘기기
         contracts_tenants = db.session.query(
             Contracts, Tenants
-        ).outerjoin(Tenants, Contracts.tenant_id == Tenants.id).all()
+        ).outerjoin(Tenants, Contracts.tenant_id == Tenants.id).all() # order가 안돼있음 해야함
         return render_template('/contracts.html', contracts_tenants=contracts_tenants)
 
 
@@ -180,6 +180,38 @@ def name_list():
     for tenant in tenants:
         name_list.append(tenant.name)
     return jsonify({'result': 'success', 'name_list': name_list})
+
+
+@app.route('/deposit_history', methods=['GET', 'POST'])
+def deposit_histroy():
+    if request.method == 'POST':
+        # 우선 id로 넘기고 나중에 이름으로 넘기도록 변경
+        deposit_tenant_id = request.form['tenant_name']
+        deposit_depositor = request.form['depositor']
+        deposit_deposit_date = request.form['deposit_date']
+        deposit_amount = request.form['amount']
+        deposit_memo = request.form['memo']
+        deposit_created_at = datetime.now()+timedelta(hours=9)
+
+        new_deposit_history = DepositHistory(
+            tenant_id=deposit_tenant_id,
+            depositor=deposit_depositor,
+            deposit_date=datetime.strptime(
+                deposit_deposit_date, '%Y-%m-%d').date(),  # db형태에 맞춰져 변환
+            amount = deposit_amount,
+            memo=deposit_memo,
+            created_at=deposit_created_at,
+        )
+
+        try:
+            db.session.add(new_deposit_history)
+            db.session.commit()
+            return redirect('/deposit_history')
+        except:
+            return "new_deposit_history add error"
+    else:
+        deposit_history_all = DepositHistory.query.order_by(DepositHistory.created_at).all()
+        return render_template('/deposit_history.html', deposit_history_all=deposit_history_all)
 
 
 if __name__ == "__main__":
