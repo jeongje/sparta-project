@@ -80,7 +80,7 @@ def tenants():
         tenant_memo = request.form['memo']
         # 시간이 동일하게 출력되는 문제가 있었다. 이건 db에서 default지정의 의미를 이해 못해서 생긴 문제
         # db에서 default는 db가 호출되는 시간. 따라서 그 시간이 계속 저장된 새로 post요청 보낼 때 다시 시간을 입력해줘야 함
-        tenant_created_at = datetime.now()+timedelta(hours=9)
+        tenant_created_at = datetime.utcnow()+timedelta(hours=9)
         new_tenant = Tenants(name=tenant_name, phone=tenant_phone,
                              memo=tenant_memo, created_at=tenant_created_at)
 
@@ -144,7 +144,7 @@ def contracts():
         contract_start_date = request.form['start_date']
         contract_end_date = request.form['end_date']
         contract_memo = request.form['memo']
-        contract_created_at = datetime.now()+timedelta(hours=9)
+        contract_created_at = datetime.utcnow()+timedelta(hours=9)
 
         new_contract = Contracts(
             tenant_id=contract_tenant_id,
@@ -169,7 +169,7 @@ def contracts():
         # Contracts테이블과 Tenants테이블 join후 묶어서 넘기기
         contracts_tenants = db.session.query(
             Contracts, Tenants
-        ).outerjoin(Tenants, Contracts.tenant_id == Tenants.id).all() # order가 안돼있음 해야함
+        ).outerjoin(Tenants, Contracts.tenant_id == Tenants.id).order_by(Contracts.created_at).all()
         return render_template('/contracts.html', contracts_tenants=contracts_tenants)
 
 
@@ -185,13 +185,17 @@ def name_list():
 @app.route('/deposit_history', methods=['GET', 'POST'])
 def deposit_histroy():
     if request.method == 'POST':
-        # 우선 id로 넘기고 나중에 이름으로 넘기도록 변경
-        deposit_tenant_id = request.form['tenant_name']
+        # 이름을 받아서 tenant_id로 변경 > 동명이인 처리 안됨
+        tenant_name = request.form['tenant_name']
+        tenant_id = Tenants.query.filter(
+            Tenants.name == tenant_name).first().id
+        # DepositHistory 테이블에 넣기
+        deposit_tenant_id = tenant_id
         deposit_depositor = request.form['depositor']
         deposit_deposit_date = request.form['deposit_date']
         deposit_amount = request.form['amount']
         deposit_memo = request.form['memo']
-        deposit_created_at = datetime.now()+timedelta(hours=9)
+        deposit_created_at = datetime.utcnow()+timedelta(hours=9)
 
         new_deposit_history = DepositHistory(
             tenant_id=deposit_tenant_id,
@@ -210,8 +214,16 @@ def deposit_histroy():
         except:
             return "new_deposit_history add error"
     else:
-        deposit_history_all = DepositHistory.query.order_by(DepositHistory.created_at).all()
-        return render_template('/deposit_history.html', deposit_history_all=deposit_history_all)
+        # deposit_all_tenants = DepositHistory.query.order_by(DepositHistory.created_at).all()
+        # Contracts테이블과 Tenants테이블 join후 묶어서 넘기기
+        # contracts_tenants = db.session.query(
+        #     Contracts, Tenants
+        # ).outerjoin(Tenants, Contracts.tenant_id == Tenants.id).order_by(Contracts.created_at).all()
+
+        deposit_all_tenants = db.session.query(
+            DepositHistory, Tenants
+        ).outerjoin(Tenants, DepositHistory.tenant_id == Tenants.id).order_by(DepositHistory.created_at).all()
+        return render_template('/deposit_history.html', deposit_all_tenants=deposit_all_tenants)
 
 
 if __name__ == "__main__":
