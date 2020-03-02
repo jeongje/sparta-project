@@ -17,11 +17,12 @@ class Tenants(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False, unique=True)
     phone = db.Column(db.String(20), nullable=False)
-    tenant_memo = db.Column(db.Text)
+    memo = db.Column(db.Text)
     created_at = db.Column(db.DateTime, nullable=False)
     delete_col = db.Column(db.Boolean, default=False)
 
     contracts = db.relationship('Contracts', backref='tenants')
+    deposit_history = db.relationship('DepositHistory', backref='tenants')
 
     def __repr__(self):
         return '<Tenants %r>' % str(self.id)
@@ -32,14 +33,15 @@ class Contracts(db.Model):
     __tablename__ = 'contracts'
 
     id = db.Column(db.Integer, primary_key=True)
-    tenant_id = db.Column(db.Integer, db.ForeignKey('tenants.id'), nullable=False)
+    tenant_id = db.Column(db.Integer, db.ForeignKey(
+        'tenants.id'), nullable=False)
     address = db.Column(db.String(30), nullable=False)
     deposit = db.Column(db.Integer, nullable=False)
     monthly = db.Column(db.Integer, nullable=False)
     management_fee = db.Column(db.Integer, nullable=False)
     start_date = db.Column(db.DateTime, nullable=False)
     end_date = db.Column(db.DateTime, nullable=False)
-    contract_memo = db.Column(db.Text)
+    memo = db.Column(db.Text)
     created_at = db.Column(db.DateTime, nullable=False)
     delete_col = db.Column(db.Boolean, default=False)
 
@@ -47,9 +49,22 @@ class Contracts(db.Model):
         return '<Contracts %r>' % str(self.id)
 
 
-# class DepositHistory(db.Model):
+class DepositHistory(db.Model):
 
-#     __tablename__ = 'deposit_history'
+    __tablename__ = 'deposit_history'
+
+    id = db.Column(db.Integer, primary_key=True)
+    tenant_id = db.Column(db.Integer, db.ForeignKey(
+        'tenants.id'), nullable=False)
+    depositor = db.Column(db.String(20), nullable=False)
+    deposit_date = db.Column(db.DateTime, nullable=False)
+    amount = db.Column(db.Integer, nullable=False)
+    memo = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, nullable=False)
+    delete_col = db.Column(db.Boolean, default=False)
+
+    def __repr__(self):
+        return '<Contracts %r>' % str(self.id)
 
 
 @app.route('/')
@@ -62,12 +77,12 @@ def tenants():
     if request.method == 'POST':
         tenant_name = request.form['name']
         tenant_phone = request.form['phone']
-        tenant_memo = request.form['tenant_memo']
+        tenant_memo = request.form['memo']
         # 시간이 동일하게 출력되는 문제가 있었다. 이건 db에서 default지정의 의미를 이해 못해서 생긴 문제
         # db에서 default는 db가 호출되는 시간. 따라서 그 시간이 계속 저장된 새로 post요청 보낼 때 다시 시간을 입력해줘야 함
         tenant_created_at = datetime.now()+timedelta(hours=9)
         new_tenant = Tenants(name=tenant_name, phone=tenant_phone,
-                             tenant_memo=tenant_memo, created_at=tenant_created_at)
+                             memo=tenant_memo, created_at=tenant_created_at)
 
         try:
             db.session.add(new_tenant)
@@ -100,7 +115,7 @@ def tenant_edit(id):
     if request.method == 'POST':
         tenant.name = request.form['name']
         tenant.phone = request.form['phone']
-        tenant.tenant_memo = request.form['tenant_memo']
+        tenant.memo = request.form['memo']
 
         try:
             db.session.commit()
@@ -128,7 +143,7 @@ def contracts():
         contract_management_fee = request.form['management_fee']
         contract_start_date = request.form['start_date']
         contract_end_date = request.form['end_date']
-        contract_contract_memo = request.form['contract_memo']
+        contract_memo = request.form['memo']
         contract_created_at = datetime.now()+timedelta(hours=9)
 
         new_contract = Contracts(
@@ -141,7 +156,7 @@ def contracts():
                 contract_start_date, '%Y-%m-%d').date(),  # db형태에 맞춰져 변환
             end_date=datetime.strptime(
                 contract_end_date, '%Y-%m-%d').date(),  # db형태에 맞춰져 변환
-            contract_memo=contract_contract_memo,
+            memo=contract_memo,
             created_at=contract_created_at,
         )
         try:
