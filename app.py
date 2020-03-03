@@ -64,7 +64,7 @@ class DepositHistory(db.Model):
     delete_col = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
-        return '<Contracts %r>' % str(self.id)
+        return '<DepositHistory %r>' % str(self.id)
 
 
 @app.route('/')
@@ -214,12 +214,7 @@ def deposit_histroy():
         except:
             return "new_deposit_history add error"
     else:
-        # deposit_all_tenants = DepositHistory.query.order_by(DepositHistory.created_at).all()
-        # Contracts테이블과 Tenants테이블 join후 묶어서 넘기기
-        # contracts_tenants = db.session.query(
-        #     Contracts, Tenants
-        # ).outerjoin(Tenants, Contracts.tenant_id == Tenants.id).order_by(Contracts.created_at).all()
-
+        # DepositHistory테이블과 Tenants테이블 join후 묶어서 넘기기 > 넘긴 뒤 두개를 분리해줘야 함 (여기서 나눠서 주는것도 가능할 듯)
         deposit_all_tenants = db.session.query(
             DepositHistory, Tenants
         ).outerjoin(Tenants, DepositHistory.tenant_id == Tenants.id).order_by(DepositHistory.created_at).all()

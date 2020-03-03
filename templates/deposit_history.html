@@ -59,16 +59,18 @@
     </thead>
     <tbody>
         {% for deposit_tenant in deposit_all_tenants %}
+        {% set deposit_history = deposit_tenant[0] %}
+        {% set tenant = deposit_tenant[1] %}
         <!--  if tenant.delete_col == False  -->
         <tr>
-            <th scope="row">{{ deposit_tenant.id }}</th>
-            <td>{{ deposit_tenant.created_at }}</td>
-            <td>{{ deposit_tenant.tenant_id }}</td>
-            <td>{{ deposit_tenant.depositor }}</td>
-            <td>{{ deposit_tenant.deposit_date }}</td>
-            <td>{{ deposit_tenant.amount }}</td>
-            <td>{{ deposit_tenant.memo }}</td>
-            <td>{{ deposit_tenant.delete_col }}</td>
+            <th scope="row">{{ deposit_history.id }}</th>
+            <td>{{ deposit_history.created_at }}</td>
+            <td>{{ tenant.name }}</td>  
+            <td>{{ deposit_history.depositor }}</td>
+            <td>{{ deposit_history.deposit_date }}</td>
+            <td>{{ deposit_history.amount }}</td>
+            <td>{{ deposit_history.memo }}</td>
+            <td>{{ deposit_history.delete_col }}</td>
             <td>
                 <a class="btn btn-primary btn-sm" href="" role="button">삭제</a>
                 <a class="btn btn-primary btn-sm" href="" role="button">수정</a>
