@@ -14,7 +14,9 @@
         <div class="form-group row required">
             <label for="tenant_name" class="col-sm-2 col-form-label text-center control-label">입주자</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" name="tenant_name" id="tenant_name" required>
+                <select class="form-control" name="tenant_name" id="tenant_name" required>
+                    <option hidden disabled selected value></option>
+                </select>
             </div>
             <label for="depositor" class="col-sm-2 col-form-label text-center control-label">입금자명</label>
             <div class="col-sm-4">
@@ -80,7 +82,7 @@
         {% endfor %}
     </tbody>
 </table>
-
+<script type="text/javascript" src="{{ url_for('static', filename='scripts/tenant_namelist.js') }}"></script>
 
 {% endblock %}
 
