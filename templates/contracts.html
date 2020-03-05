@@ -79,14 +79,14 @@
     {% set tenant = contract_tenant[1] %}
     <tr>
         <th scope="row">{{ contract.id }}</th>
-        <td>{{ contract.created_at }}</td>
+        <td>{{ contract.created_at.strftime("%Y-%m-%d") }}</td>
         <td>{{ tenant.name }}</td>
         <td>{{ contract.address }}</td>
         <td>{{ contract.deposit }}</td>
         <td>{{ contract.monthly }}</td>
         <td>{{ contract.management_fee }}</td>
-        <td>{{ contract.start_date }}</td>
-        <td>{{ contract.end_date }}</td>
+        <td>{{ contract.start_date.strftime("%Y-%m-%d") }}</td>
+        <td>{{ contract.end_date.strftime("%Y-%m-%d") }}</td>
         <td>{{ contract.memo }}</td>
         <td>{{ contract.delete_col}}</td>
         <td>{{ contract.tenant_id}}</td>

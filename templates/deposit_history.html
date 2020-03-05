@@ -64,10 +64,10 @@
         <!--  if tenant.delete_col == False  -->
         <tr>
             <th scope="row">{{ deposit_history.id }}</th>
-            <td>{{ deposit_history.created_at }}</td>
+            <td>{{ deposit_history.created_at.strftime("%Y-%m-%d") }}</td>
             <td>{{ tenant.name }}</td>  
             <td>{{ deposit_history.depositor }}</td>
-            <td>{{ deposit_history.deposit_date }}</td>
+            <td>{{ deposit_history.deposit_date.strftime("%Y-%m-%d") }}</td>
             <td>{{ deposit_history.amount }}</td>
             <td>{{ deposit_history.memo }}</td>
             <td>{{ deposit_history.delete_col }}</td>

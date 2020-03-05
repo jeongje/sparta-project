@@ -51,7 +51,7 @@
         <!--  if tenant.delete_col == False  -->
         <tr>
             <th scope="row">{{ tenant.id }}</th>
-            <td>{{ tenant.created_at }}</td>
+            <td>{{ tenant.created_at.strftime("%Y-%m-%d") }}</td>
             <td>{{ tenant.name }}</td>
             <td>{{ tenant.phone }}</td>
             <td>{{ tenant.memo }}</td>
